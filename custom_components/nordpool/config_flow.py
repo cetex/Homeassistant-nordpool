@@ -6,8 +6,14 @@ import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.helpers.template import Template
 
-from . import DOMAIN
-from .sensor import _PRICE_IN, _REGIONS, DEFAULT_TEMPLATE
+from .const import (
+    DOMAIN,
+    _PRICE_IN,
+    _REGIONS,
+    DEFAULT_TEMPLATE
+)
+#from . import DOMAIN
+#from .sensor import _PRICE_IN, _REGIONS, DEFAULT_TEMPLATE
 
 regions = sorted(list(_REGIONS.keys()))
 currencys = sorted(list(set(v[0] for k, v in _REGIONS.items())))
