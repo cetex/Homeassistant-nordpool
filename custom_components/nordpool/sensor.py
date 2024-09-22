@@ -114,7 +114,7 @@ def _dry_setup(hass, config, add_devices, discovery_info=None):
     _LOGGER.debug("Dumping config %r", config)
     _LOGGER.debug("timezone set in ha %r", hass.config.time_zone)
     region = config.get(CONF_REGION)
-    friendly_name = config.get("friendly_name", "")
+    name = config.get("name", "")
     price_type = config.get("price_type")
     precision = config.get("precision")
     low_price_cutoff = config.get("low_price_cutoff")
@@ -123,8 +123,10 @@ def _dry_setup(hass, config, add_devices, discovery_info=None):
     use_cents = config.get("price_in_cents")
     ad_template = config.get("additional_costs")
     api = hass.data[DOMAIN]
+    unique_id = config.get("unique_id", "")
+
     sensor = NordpoolSensor(
-        friendly_name,
+        name,
         region,
         price_type,
         precision,
@@ -135,6 +137,7 @@ def _dry_setup(hass, config, add_devices, discovery_info=None):
         api,
         ad_template,
         hass,
+        unique_id,
     )
 
     add_devices([sensor])
@@ -170,7 +173,7 @@ class NordpoolSensor(SensorEntity):
         api,
         ad_template,
         hass,
-        unique_id=None,
+        unique_id,
     ) -> None:
         self._attr_name = name
         self._area = area
@@ -255,7 +258,7 @@ class NordpoolSensor(SensorEntity):
 
     @property
     def unique_id(self):
-        if self._attr_unique_id is not None:
+        if self._attr_unique_id != "":
           return self._attr_unique_id
         else:
           name = "nordpool_%s_%s_%s_%s_%s_%s" % (

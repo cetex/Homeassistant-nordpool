@@ -74,6 +74,6 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
         vol.Optional("price_type", default="kWh"): vol.In(list(_PRICE_IN.keys())),
         vol.Optional("price_in_cents", default=False): cv.boolean,
         vol.Optional("additional_costs", default=DEFAULT_TEMPLATE): cv.template,
-        vol.Optional("unique_id", default=None): cv.string,
+        vol.Optional("unique_id", default=""): cv.string,
     }
 )
